@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+</head>
+<body>
+
+<h1>Create Account</h1>
+
+<% if(errors.length){ %>
+
+<ul>
+
+<% errors.forEach(error=>{ %>
+
+<li style="color:red;">
+<%= error.msg %>
+</li>
+
+<% }) %>
+
+</ul>
+
+<% } %>
+
+<form action="/sign-up" method="POST">
+
+<label>First Name</label>
+
+<input
+type="text"
+name="firstName"
+value="<%= oldData.firstName || '' %>">
+
+<br><br>
+
+<label>Last Name</label>
+
+<input
+type="text"
+name="lastName"
+value="<%= oldData.lastName || '' %>">
+
+<br><br>
+
+<label>Email</label>
+
+<input
+type="email"
+name="username"
+value="<%= oldData.username || '' %>">
+
+<br><br>
+
+<label>Password</label>
+
+<input
+type="password"
+name="password">
+
+<br><br>
+
+<label>Confirm Password</label>
+
+<input
+type="password"
+name="confirmPassword">
+
+<br><br>
+
+<button>
+
+Create Account
+
+</button>
+
+</form>
+
+<br>
+
+<a href="/">Home</a>
+
+</body>
+</html>
