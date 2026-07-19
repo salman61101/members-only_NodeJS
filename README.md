@@ -12,12 +12,6 @@ Visitors can browse public messages anonymously, while registered users can log 
 
 ---
 
-## Live Demo
-
-Live Demo: https://your-live-demo-url.com
-
----
-
 ## Preview
 
 ![Home Page](./screenshots/home.png)
