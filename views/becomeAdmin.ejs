@@ -1,0 +1,21 @@
+<%- include("partials/head", { title }) %>
+<%- include("partials/navbar") %>
+
+<main class="page-shell narrow">
+    <section class="card form-card">
+        <h1>Become Admin</h1>
+        <p class="form-copy">Members only. Enter the admin passcode to gain moderation access.</p>
+        <%- include("partials/formErrors", { errors }) %>
+
+        <form action="/become-admin" method="POST" class="stack-form">
+            <label>
+                Admin Passcode
+                <input type="password" name="passcode">
+            </label>
+
+            <button class="button button-primary" type="submit">Become Admin</button>
+        </form>
+    </section>
+</main>
+
+<%- include("partials/footer") %>

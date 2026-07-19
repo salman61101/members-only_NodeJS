@@ -1,0 +1,21 @@
+<%- include("partials/head", { title }) %>
+<%- include("partials/navbar") %>
+
+<main class="page-shell narrow">
+    <section class="card form-card">
+        <h1>Join Club</h1>
+        <p class="form-copy">Enter the secret passcode to unlock member-only access.</p>
+        <%- include("partials/formErrors", { errors }) %>
+
+        <form action="/join" method="POST" class="stack-form">
+            <label>
+                Secret Passcode
+                <input type="password" name="passcode">
+            </label>
+
+            <button class="button button-primary" type="submit">Join Club</button>
+        </form>
+    </section>
+</main>
+
+<%- include("partials/footer") %>

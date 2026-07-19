@@ -1,84 +1,40 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title><%= title %></title>
-</head>
-<body>
+<%- include("partials/head", { title }) %>
+<%- include("partials/navbar") %>
 
-<h1>Create Account</h1>
+<main class="page-shell narrow">
+    <section class="card form-card">
+        <h1>Create Account</h1>
+        <%- include("partials/formErrors", { errors }) %>
 
-<% if(errors.length){ %>
+        <form action="/sign-up" method="POST" class="stack-form">
+            <label>
+                First Name
+                <input type="text" name="firstName" value="<%= oldData.firstName || '' %>">
+            </label>
 
-<ul>
+            <label>
+                Last Name
+                <input type="text" name="lastName" value="<%= oldData.lastName || '' %>">
+            </label>
 
-<% errors.forEach(error=>{ %>
+            <label>
+                Email
+                <input type="email" name="username" value="<%= oldData.username || '' %>">
+            </label>
 
-<li style="color:red;">
-<%= error.msg %>
-</li>
+            <label>
+                Password
+                <input type="password" name="password">
+            </label>
 
-<% }) %>
+            <label>
+                Confirm Password
+                <input type="password" name="confirmPassword">
+            </label>
 
-</ul>
+            <button class="button button-primary" type="submit">Create Account</button>
+        </form>
+    </section>
+</main>
 
-<% } %>
-
-<form action="/sign-up" method="POST">
-
-<label>First Name</label>
-
-<input
-type="text"
-name="firstName"
-value="<%= oldData.firstName || '' %>">
-
-<br><br>
-
-<label>Last Name</label>
-
-<input
-type="text"
-name="lastName"
-value="<%= oldData.lastName || '' %>">
-
-<br><br>
-
-<label>Email</label>
-
-<input
-type="email"
-name="username"
-value="<%= oldData.username || '' %>">
-
-<br><br>
-
-<label>Password</label>
-
-<input
-type="password"
-name="password">
-
-<br><br>
-
-<label>Confirm Password</label>
-
-<input
-type="password"
-name="confirmPassword">
-
-<br><br>
-
-<button>
-
-Create Account
-
-</button>
-
-</form>
-
-<br>
-
-<a href="/">Home</a>
-
-</body>
-</html>
+<%- include("partials/footer") %>

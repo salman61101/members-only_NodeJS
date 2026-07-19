@@ -1,6 +1,7 @@
 const db = require("../db/queries");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
+const passport = require("passport");
 
 exports.signUpGet = (req, res) => {
     res.render("sign-up", {
@@ -25,7 +26,16 @@ exports.signUpPost = [
     body("username")
         .trim()
         .isEmail()
-        .withMessage("Enter a valid email"),
+        .withMessage("Enter a valid email")
+        .custom(async (value) => {
+            const existingUser = await db.getUserByUsername(value);
+
+            if (existingUser) {
+                throw new Error("Email already exists");
+            }
+
+            return true;
+        }),
 
     body("password")
         .isLength({ min: 6 })
@@ -57,27 +67,6 @@ exports.signUpPost = [
 
         }
 
-        const existingUser =
-            await db.getUserByUsername(req.body.username);
-
-        if (existingUser) {
-
-            return res.render("sign-up", {
-
-                title: "Create Account",
-
-                errors: [
-                    {
-                        msg: "Email already exists",
-                    },
-                ],
-
-                oldData: req.body,
-
-            });
-
-        }
-
         const hashedPassword =
             await bcrypt.hash(req.body.password, 10);
 
@@ -97,4 +86,84 @@ exports.signUpPost = [
 
     },
 
+
+
+    
 ];
+
+
+exports.loginGet = (req, res) => {
+    res.render("login", {
+        title: "Login",
+        errors: [],
+        oldData: {},
+    });
+};
+
+exports.loginPost = [
+    body("username")
+        .trim()
+        .isEmail()
+        .withMessage("Enter a valid email"),
+    body("password")
+        .notEmpty()
+        .withMessage("Password is required"),
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).render("login", {
+                title: "Login",
+                errors: errors.array(),
+                oldData: req.body,
+            });
+        }
+
+        passport.authenticate("local", (err, user) => {
+            if (err) {
+                return next(err);
+            }
+
+            if (!user) {
+                return res.status(400).render("login", {
+                    title: "Login",
+                    errors: [{ msg: "Incorrect email or password" }],
+                    oldData: req.body,
+                });
+            }
+
+            req.logIn(user, (loginErr) => {
+                if (loginErr) {
+                    return next(loginErr);
+                }
+
+                return res.redirect("/");
+            });
+        })(req, res, next);
+    },
+];
+
+
+exports.logout = (
+
+    req,
+
+    res,
+
+    next
+
+) => {
+
+    req.logout((err) => {
+
+        if (err) {
+
+            return next(err);
+
+        }
+
+        res.redirect("/");
+
+    });
+
+};

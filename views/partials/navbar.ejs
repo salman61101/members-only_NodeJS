@@ -1,0 +1,21 @@
+<header class="topbar">
+    <div class="topbar-inner">
+        <a class="brand" href="/">Members Only</a>
+
+        <nav class="nav-links" aria-label="Primary">
+            <a href="/">Home</a>
+
+            <% if (currentUser) { %>
+                <a href="/messages/new">Create Message</a>
+                <a href="/join">Join Club</a>
+                <% if (currentUser.membership_status || currentUser.is_admin) { %>
+                    <a href="/become-admin">Become Admin</a>
+                <% } %>
+                <a href="/log-out">Logout</a>
+            <% } else { %>
+                <a href="/log-in">Login</a>
+                <a href="/sign-up">Sign Up</a>
+            <% } %>
+        </nav>
+    </div>
+</header>

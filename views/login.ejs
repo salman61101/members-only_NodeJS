@@ -1,15 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Login</title>
-</head>
+<%- include("partials/head", { title }) %>
+<%- include("partials/navbar") %>
 
-<body>
+<main class="page-shell narrow">
+	<section class="card form-card">
+		<h1>Login</h1>
+		<%- include("partials/formErrors", { errors }) %>
 
-<h1>Login Page</h1>
+		<form action="/log-in" method="POST" class="stack-form">
+			<label>
+				Email
+				<input type="email" name="username" value="<%= oldData.username || '' %>" required>
+			</label>
 
-<p>Coming in Part 3...</p>
+			<label>
+				Password
+				<input type="password" name="password" required>
+			</label>
 
-</body>
+			<button class="button button-primary" type="submit">Login</button>
+		</form>
+	</section>
+</main>
 
-</html>
+<%- include("partials/footer") %>
